@@ -1,0 +1,59 @@
+create database store;
+create table countries(
+    code int(10) primary key,
+    name varchar(20) not null unique ,
+    continent_name varchar(20) not null unique
+);
+drop table countries;
+select * from countries;
+
+create table users(
+    id int (10) primary key not null ,
+    full_name varchar(20)not null ,
+    email varchar(20) not null unique,
+    gender char(1) not null check ( 'm'or 'f'),
+    date_of_birth varchar(15) not null ,
+    crated_at datetime  ,
+    conuntry_code int,
+    foreign key (conuntry_code) references countries (code)
+);
+drop table users;
+select *from users;
+
+create table orders(
+    id int primary key ,
+    user_id int ,
+    foreign key (user_id) references users(id),
+    status varchar(6) check ( 'start'or 'finish'),
+    created_at datetime
+);
+drop table orders;
+select *from orders;
+
+create table order_products(
+    order_id int primary key ,
+    product_id int  ,
+    foreign key (product_id)references products(id),
+    foreign key (order_id)references orders(id),
+    quantity int
+);
+drop table order_products;
+
+create table products(
+    id int primary key ,
+    name varchar(10),
+    price int default 0,
+    status varchar(10) check ( 'valid' or 'expired'),
+    created_at datetime
+);
+drop table products;
+select*from products;
+
+insert  into countries values  ('1','Ahmed','s');
+insert  into users values  ('123','AhmedALharbi','ahmed@gmai','m','2001',2);
+insert  into orders values  ('10','111','start');
+insert  into order_products values  ('1234,88,9');
+insert  into products values  ('7','ahmed',0,'valid');
+update  countries set  name='ali' where code='9';
+delete from  products where name='Ahmed';
+
